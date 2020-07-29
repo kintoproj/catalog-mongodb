@@ -57,7 +57,7 @@ MongoDB can be accessed via port {{ .Values.service.port }} on the following DNS
 {{- if eq .Values.architecture "replicaset" }}
 
     {{ range $e, $i := until $replicaCount }}
-    {{- $fullname }}-{{ $i }}.{{ $fullname }}-headless.{{ $releaseNamespace }}.svc.{{ $clusterDomain }}
+    {{- $fullname }}-{{ $i }}.{{ $fullname }}.{{ $releaseNamespace }}.svc.{{ $clusterDomain }}
     {{ end }}
 
 {{- else }}
@@ -88,7 +88,7 @@ To connect to your database, create a MongoDB client container:
 Then, run the following command:
 
     {{- if eq .Values.architecture "replicaset" }}
-    mongo admin --host "{{- range $e, $i := until $replicaCount }}{{ $fullname }}-{{ $i }}.{{ $fullname }}-headless.{{ $releaseNamespace }}.svc.{{ $clusterDomain }},{{ end }}" {{- if .Values.auth.enabled }} --authenticationDatabase admin -u root -p $MONGODB_ROOT_PASSWORD{{- end }}
+    mongo admin --host "{{- range $e, $i := until $replicaCount }}{{ $fullname }}-{{ $i }}.{{ $fullname }}.{{ $releaseNamespace }}.svc.{{ $clusterDomain }},{{ end }}" {{- if .Values.auth.enabled }} --authenticationDatabase admin -u root -p $MONGODB_ROOT_PASSWORD{{- end }}
     {{- else }}
     mongo admin --host "{{ template "mongodb.fullname" . }}" {{- if .Values.auth.enabled }} --authenticationDatabase admin -u root -p $MONGODB_ROOT_PASSWORD{{- end }}
     {{- end }}
