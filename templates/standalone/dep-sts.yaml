@@ -5,6 +5,7 @@ metadata:
   name: {{ include "mongodb.fullname" . }}
   namespace: {{ include "mongodb.namespace" . }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app: {{ template "mongodb.name" . }}
     app.kubernetes.io/component: mongodb
     {{- if .Values.labels }}
     {{- include "common.tplvalues.render" (dict "value" .Values.labels "context" $) | nindent 4 }}
@@ -25,10 +26,12 @@ spec:
     {{- end }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app: {{ template "mongodb.name" . }}
       app.kubernetes.io/component: mongodb
   template:
     metadata:
       labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app: {{ template "mongodb.name" . }}
         app.kubernetes.io/component: mongodb
         {{- if .Values.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.podLabels "context" $) | nindent 8 }}

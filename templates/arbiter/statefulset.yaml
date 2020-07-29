@@ -5,6 +5,7 @@ metadata:
   name: {{ include "mongodb.fullname" . }}-arbiter
   namespace: {{ include "mongodb.namespace" . }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app: {{ template "mongodb.name" . }}
     app.kubernetes.io/component: arbiter
     {{- if .Values.arbiter.labels }}
     {{- include "common.tplvalues.render" (dict "value" .Values.arbiter.labels "context" $) | nindent 4 }}
@@ -16,10 +17,12 @@ spec:
   serviceName: {{ include "mongodb.fullname" . }}-arbiter-headless
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app: {{ template "mongodb.name" . }}
       app.kubernetes.io/component: arbiter
   template:
     metadata:
       labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app: {{ template "mongodb.name" . }}
         app.kubernetes.io/component: arbiter
         {{- if .Values.arbiter.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.arbiter.podLabels "context" $) | nindent 8 }}
