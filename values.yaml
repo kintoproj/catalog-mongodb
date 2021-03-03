@@ -385,7 +385,7 @@ persistence:
   ## If undefined (the default) or set to null, no storageClassName spec is
   ## set, choosing the default provisioner.
   ##
-  storageClass: "ssd"
+  # storageClass: "ssd"
   ## PV Access Mode
   ##
   accessModes:
